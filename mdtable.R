@@ -44,7 +44,6 @@ mdtable <- function(cell_line_name){
   cancer_cell_lines<-within(cancer_cell_lines,V3<-toupper(with(cancer_cell_lines,V3)))
   cancer_cell_lines<-within(cancer_cell_lines,V4<-toupper(with(cancer_cell_lines,V4)))
   
-  #For some reason there are rows where V3 and V4 got switched
   
   cancer_cell_lines<-within(cancer_cell_lines,{
     V3<-ifelse(V3=='HUMAN',
