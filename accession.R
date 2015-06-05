@@ -10,9 +10,9 @@
 #' @return All: A list, separated by type of accession number, of all the accession numbers.  
 #'
 #' @examples
-#' Accession('MCF7')
+#' accession('MCF7')
 
-Accession <- function(cell_line_name){
+accession <- function(cell_line_name){
   
   #Read in the md dataframe
   md <- read.table('all_illumina_sra_for_human.txt', 
@@ -112,7 +112,7 @@ Accession <- function(cell_line_name){
   
   md.table<-within(md.table, {
     sample_origin<-ifelse(md.table$match=='FALSE',
-                          levels(as.factor(md$sample_origin)),
+                          md$sample_origin,
                           toupper(md.table$V3))
   })
   #View(md.table)
@@ -120,11 +120,11 @@ Accession <- function(cell_line_name){
   Subset <- as.data.frame(subset(md.table,
                                  subset=(cell_line==cell_line_name)))
   }
-  runaccession <- unique(Subset2[,2])
-  sampleaccession <- unique(Subset2[,3])
-  expaccession <- unique(Subset2[,4])
-  studyaccession <- unique(Subset2[,5])
-  subaccession <- unique(Subset2[,6])
+  runaccession <- unique(Subset[,2])
+  sampleaccession <- unique(Subset[,3])
+  expaccession <- unique(Subset[,4])
+  studyaccession <- unique(Subset[,5])
+  subaccession <- unique(Subset[,6])
   {
   All<-list(runaccession,sampleaccession,expaccession,studyaccession,subaccession)
   }
