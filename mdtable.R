@@ -108,13 +108,13 @@ mdtable <- function(cell_line_name){
   names(match) [1] <- 'cell_line'
   
   md.table <- merge(md2,match,all=TRUE)
-  md.table <- within(md.table,cell_line<-gsub('-','',with(md3,cell_line)))
-  md.table <- within(md.table,cell_line<-gsub(' ','',with(md3,cell_line)))
+  md.table <- within(md.table,cell_line<-gsub('-','',with(md.table,cell_line)))
+  md.table <- within(md.table,cell_line<-gsub(' ','',with(md.table,cell_line)))
   md.table$match<-md.table$cell_line %in% ref_cell_lines$V2
   
   md.table<-within(md.table, {
     sample_origin<-ifelse(md.table$match=='FALSE',
-                          levels(as.factor(md$sample_origin)),
+                          md$sample_origin,
                           toupper(md.table$V3))
   })
   #View(md.table)
