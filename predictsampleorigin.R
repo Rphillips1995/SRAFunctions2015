@@ -11,15 +11,18 @@
 #' predictsampleorigin('AGS')
 #' predictsampleorigin('MCF7')
 
+
 predictsampleorigin <- function(cell_line_name){
   
   Subset <- as.data.frame(subset(metadata,
-                                 subset=(cell_line==cell_line_name)))
+                                 subset=(cell_line==toupper(cell_line_name))))
   {  
   origin <- unique(with(Subset,sample_origin))
   }
   {
-  return(origin)
+  if(length(origin)==0){
+    stop('cell line not found')
   }
-  
+  }
+  return(origin)
 }
