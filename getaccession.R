@@ -10,12 +10,12 @@
 #' @return All: A list, separated by type of accession number, of all the accession numbers.  
 #'
 #' @examples
-#' accession('MCF7')
+#' getaccession('MCF7')
 
-accession <- function(cell_line_name){
+getaccession <- function(cell_line_name){
   
   Subset <- as.data.frame(subset(metadata,
-                                 subset=(cell_line==cell_line_name)))
+                                 subset=(cell_line==toupper(cell_line_name))))
   {
   runaccession <- unique(Subset[,1])
   sampleaccession <- unique(Subset[,2])
@@ -26,6 +26,10 @@ accession <- function(cell_line_name){
   {
   All<-list(runaccession,sampleaccession,expaccession,studyaccession,subaccession)
   }
+  {
+  if(length(All[[1]])==0) {
+    stop('cell line not found')
+  }}
   {
   names(All) <- c('run_accession',
                   'sample_accession',
