@@ -17,6 +17,7 @@
 ref_cls <- function(){
   #All urls will come from the sigma aldrich website. 
   #Getting a reference of cancer cell lines from sigma aldrich table. 
+  #Information was extracted from the urls on July 27th, 2015. 
   url<-'http://www.sigmaaldrich.com/europe/life-science-offers/cell-cycle/sigma-ecacc-cell/cancer-cell-lines.html#BRC'
   cancer_cell_lines <- readHTMLTable(url, header = TRUE, 
                                      as.data.frame = TRUE, 
@@ -99,11 +100,14 @@ ref_cls <- function(){
   names(ref_cell_lines) [2] <- 'tissue'
   names(ref_cell_lines) [3] <- 'species'
   { 
+  #There are rows where the tissue and Species were switched around. 
+  ref_cell_lines<-within(ref_cell_lines,{
+    tissue<-ifelse(tissue=='HUMAN'|tissue=="MOUSE"|tissue=="RABBIT"|tissue=="DOG"|tissue=="HUMAN/MOUSE HYBRID"|tissue=="RAT/MOUSE HYBRID"|tissue=="GUINEA PIG"|tissue=="RAT"|tissue=="MOUSE X RAT HYBRID",
+               toupper(ref_cell_lines$species),
+               ref_cell_lines$tissue)
+  })
   #Saving the file
   save(ref_cell_lines,file='ref_cell_lines.Rda')
   }
 }
-
-
-
 
