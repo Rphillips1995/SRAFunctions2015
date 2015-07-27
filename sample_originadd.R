@@ -29,7 +29,7 @@ sample_originadd <- function(){
   #Giving the rows an ID will help us in reordering the rows into their original format. 
   df2$id<-1:nrow(df2)
   
-  #This creates a dataframe of the cell lines in the reference table that match the cell lines    in md2
+  #This creates a dataframe of the cell lines in the reference table that match the cell lines in df2
   match <- subset(ref_cell_lines,subset=(ref_cell_lines$cell_line %in% df2$cell_line)==TRUE)
   names(match) [1] <- 'cell_line'
   
@@ -37,14 +37,18 @@ sample_originadd <- function(){
   table <- merge(df2,match,all=TRUE)
   table <- within(table,cell_line<-gsub('-','',with(table,cell_line)))
   table <- within(table,cell_line<-gsub(' ','',with(table,cell_line)))
+  #Creating a match column that will tell us whether or not the cell line matches to one in our ref_cell_lines data frame. 
   table$match<-table$cell_line %in% ref_cell_lines$cell_line
   
+  #If the cell line for a certain sample is contained in the ref_cell_lines reference dataframe then the sample_origin from 
+  #the reference dataframe is inputted. 
   table<-within(table, {
     sample_origin<-ifelse(table$match=='FALSE',
                           table$sample_origin,
                           toupper(table$tissue))
   })
   {
+  #Restoring the dataframe to its original order 
   table <- table[order(table$id),]
   table <- table[,c(2:70,1,71:77)]
   metadata <- table
