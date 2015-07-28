@@ -10,12 +10,13 @@
 #'
 #' @return metadata An updated metadata dataframe.
 #'
+#' This function was written for development purposes. 
 
 #' @examples
 #' sample_originadd()
 
 sample_originadd <- function(){
-  
+  #This function was written for development purposes.  
   #Read in the metadata as a different object so that we can make changes to it and 
   #override later. 
   df<-metadata
